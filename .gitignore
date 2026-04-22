@@ -1,0 +1,57 @@
+# ==========================================
+# Node.js Dependencies
+# ==========================================
+node_modules/
+npm-debug.log
+yarn-error.log
+yarn-debug.log
+package-lock.json    # (Optional: Only ignore if you strictly use yarn or pnpm instead of npm)
+
+# ==========================================
+# Environment Variables (CRITICAL)
+# Never commit your Gemini API key or MongoDB URI
+# ==========================================
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+backend/.env
+frontend/.env
+
+# ==========================================
+# Frontend Build Output (Vite)
+# ==========================================
+frontend/dist/
+frontend/build/
+frontend/out/
+
+# ==========================================
+# Backend Generated Files (Puppeteer / AI)
+# ==========================================
+# Ignore generated blueprint PDFs so you don't clutter your repo
+*.pdf
+backend/temp/
+backend/uploads/
+
+# ==========================================
+# IDEs and Editors
+# ==========================================
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ==========================================
+# OS Generated Files
+# ==========================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
