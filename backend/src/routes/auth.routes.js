@@ -10,4 +10,6 @@ const authRouter = Router()
  */
 authRouter.post("/register", authController.registerUserController)
 
+
+
 module.exports = authRouter
