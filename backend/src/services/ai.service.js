@@ -18,3 +18,13 @@ const blueprintSchema = z.object({
         importStatement: z.string().describe("The code import, e.g., const express = require('express');")
     })).describe("List of essential packages and their installation commands")
 });
+
+const generateArchitectureBlueprint = async (transcript) => {
+    
+    const prompt = `You are a Principal Cloud Architect. Analyze the following audio transcript from a client describing an application they want to build.
+    Based on their description, generate a complete, highly scalable system architecture blueprint.
+    
+    Client Transcript:
+    "${transcript}"`;
+    
+};
