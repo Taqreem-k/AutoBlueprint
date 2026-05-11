@@ -20,11 +20,20 @@ const blueprintSchema = z.object({
 });
 
 const generateArchitectureBlueprint = async (transcript) => {
-    
     const prompt = `You are a Principal Cloud Architect. Analyze the following audio transcript from a client describing an application they want to build.
     Based on their description, generate a complete, highly scalable system architecture blueprint.
     
     Client Transcript:
     "${transcript}"`;
-    
+
+    const response = await ai.models.generateContent({
+        model: 'gemini-2.5-flash',
+        contents: prompt,
+        config: {
+            responseMimeType: 'application/json',
+            responseSchema: zodToJsonSchema(blueprintSchema),
+        }
+    });
+
+    return JSON.parse(response.text());
 };
