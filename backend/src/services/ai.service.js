@@ -26,14 +26,21 @@ const generateArchitectureBlueprint = async (transcript) => {
     Client Transcript:
     "${transcript}"`;
 
-    const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',
-        contents: prompt,
-        config: {
-            responseMimeType: 'application/json',
-            responseSchema: zodToJsonSchema(blueprintSchema),
-        }
-    });
+    try {
+        const response = await ai.models.generateContent({
+            model: 'gemini-2.5-flash',
+            contents: prompt,
+            config: {
+                responseMimeType: 'application/json',
+                responseSchema: zodToJsonSchema(blueprintSchema),
+            }
+        });
 
-    return JSON.parse(response.text());
+        return JSON.parse(response.text());
+    } catch (error) {
+        console.error("AI Generation Error:", error);
+        throw new Error("Failed to generate architecture blueprint");
+    }
 };
+
+module.exports = { generateArchitectureBlueprint };
