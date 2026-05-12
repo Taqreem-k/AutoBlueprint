@@ -1,5 +1,6 @@
 const express = require("express")
 const cookieParser= require("cookie-parser")
+const blueprintRouter = require('./routes/blueprint.routes')
 
 const app = express()
 
@@ -10,7 +11,7 @@ const authRouter = require("./routes/auth.routes")
 
 
 app.use("/api/auth", authRouter)
-
+app.use('/api/blueprints', blueprintRouter)
 
 
 
