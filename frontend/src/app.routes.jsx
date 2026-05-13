@@ -1,25 +1,16 @@
-import { createBrowserRouter } from "react-router";
-import Login from "./features/auth/pages/Login";
-import Register from "./features/auth/pages/Register";
-import Protected from "./features/auth/components/Protected";
-import Home from "./features/interview/pages/Home";
-import Interview from "./features/interview/pages/Interview";
+import { createBrowserRouter } from 'react-router-dom';
+import Protected from './components/Protected';
+import Home from './features/blueprint/pages/Home';
+import BlueprintResult from './features/blueprint/pages/BlueprintResult';
 
 export const router = createBrowserRouter([
+    // ... Login and Register routes stay the same
     {
-        path: "/login",
-        element: <Login />
-    },
-    {
-        path: "/register",
-        element: <Register />
-    },
-    {
-        path: "/",
+        path: '/',
         element: <Protected><Home /></Protected>
     },
     {
-        path:"/interview/:interviewId",
-        element: <Protected><Interview /></Protected>
+        path: '/blueprint/:id',
+        element: <Protected><BlueprintResult /></Protected>
     }
-])
+]);
