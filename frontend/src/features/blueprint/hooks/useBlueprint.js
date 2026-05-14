@@ -6,7 +6,7 @@ export const useBlueprint = () => {
     const context = useContext(BlueprintContext);
     if (!context) throw new Error("useBlueprint must be used within BlueprintProvider");
 
-    const { loading, setLoading, setBlueprints, setCurrentBlueprint } = context;
+    const { loading, setLoading, blueprints, setBlueprints, setCurrentBlueprint } = context;
 
     const handleGenerate = async (transcript) => {
         setLoading(true);
@@ -34,5 +34,14 @@ export const useBlueprint = () => {
         }
     };
 
-    return { ...context, handleGenerate, handleGetById };
+    const handleGetAll = async () => {
+        try {
+            const data = await getAllBlueprints();
+            setBlueprints(data.blueprints); 
+        } catch (error) {
+            console.error("Failed to fetch history", error);
+        }
+    };
+
+    return { ...context, handleGenerate, handleGetById, handleGetAll };
 };
