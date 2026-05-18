@@ -1,6 +1,7 @@
 const { GoogleGenAI } = require('@google/generative-ai');
 const { z } = require('zod');
 const { zodToJsonSchema } = require('zod-to-json-schema');
+const puppeteer = require('puppeteer')
 
 const ai = new GoogleGenAI(process.env.GEMINI_API_KEY);
 
@@ -43,4 +44,29 @@ const generateArchitectureBlueprint = async (transcript) => {
     }
 };
 
-module.exports = { generateArchitectureBlueprint };
+const generatePdfFromHtml = async (htmlContent) => {
+    const browser = await puppeteer.launch({
+        headless: "new",
+        args: ['--no-sandbox', '--disable-setuid-sandbox']
+    });
+    
+    try {
+        const page = await browser.newPage();
+        
+        await page.setContent(htmlContent, {
+            waitUntil: 'networkidle0' // Wait until all fonts/CSS are loaded
+        });
+
+        const pdfBuffer = await page.pdf({
+            format: 'A4',
+            printBackground: true,
+            margin: { top: '20mm', bottom: '20mm', left: '20mm', right: '20mm' }
+        });
+
+        return pdfBuffer;
+    } finally {
+        await browser.close();
+    }
+};
+
+module.exports = { generateArchitectureBlueprint, geenratePdfFromHtml };
