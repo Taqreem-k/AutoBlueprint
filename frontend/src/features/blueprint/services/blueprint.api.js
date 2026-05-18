@@ -19,3 +19,10 @@ export const getAllBlueprints = async () => {
     const response = await api.get('/');
     return response.data;
 };
+
+export const downloadPdfProposal = async (id) => {
+    const response = await api.get(`/${id}/pdf`, {
+        responseType: 'blob' // CRITICAL: Tells Axios we expect a binary file, not JSON
+    });
+    return response.data;
+};
