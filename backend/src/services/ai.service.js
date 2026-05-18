@@ -69,4 +69,42 @@ const generatePdfFromHtml = async (htmlContent) => {
     }
 };
 
-module.exports = { generateArchitectureBlueprint, geenratePdfFromHtml };
+const generateProposalHtml = async (blueprintData) => {
+    const prompt = `You are a Principal Cloud Architect and Technical Writer. 
+    Convert the following system architecture JSON data into a formal, beautiful, single-page HTML "Statement of Work" and Architecture Proposal.
+    
+    Requirements:
+    1. Output ONLY valid HTML5 code. Do not include markdown formatting like \`\`\`html.
+    2. Use inline CSS for styling. Make it look highly professional, clean, and modern (use sans-serif fonts, dark blue headers, and clean tables).
+    3. Include a formal header with "System Architecture Proposal".
+    4. Format the Tech Stack and Required Imports clearly.
+    
+    Data to convert:
+    ${JSON.stringify(blueprintData)}
+    `;
+
+    try {
+        const response = await ai.models.generateContent({
+            model: 'gemini-2.5-flash',
+            contents: prompt,
+            config: {
+                responseMimeType: 'text/plain', // We want pure text (HTML), not JSON this time
+            }
+        });
+
+        let html = response.text();
+        html = html.replace(/```html/g, '').replace(/```/g, '');
+        
+        return html;
+    } catch (error) {
+        console.error("AI HTML Generation Error:", error);
+        throw new Error("Failed to generate HTML proposal");
+    }
+};
+
+module.exports = { 
+    generateArchitectureBlueprint, 
+    generatePdfFromHtml, 
+    generateProposalHtml 
+};
+
